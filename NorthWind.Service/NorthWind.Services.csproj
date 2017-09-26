@@ -40,7 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProuctsService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NorthWind.Domain\NorthWind.Domain.csproj">
+      <Project>{c8decf0a-b1c7-4b79-9d0f-a9cab3f40c68}</Project>
+      <Name>NorthWind.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NorthWind.Infrastructure\NorthWind.Infrastructure.csproj">
+      <Project>{87f1f69a-c821-434b-8b8c-4c564fce094d}</Project>
+      <Name>NorthWind.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NorthWind.Repository\NorthWind.Repository.csproj">
+      <Project>{53ca2c7c-65e9-4d30-8f3b-55b1d16f9c6a}</Project>
+      <Name>NorthWind.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using NorthWind.Infrastructure;
 
 namespace NorthWind.Repository.NorthWind
 {
-    class NorthWindProductsRepository: NorWindBaseRepository
+    public class NorthWindProductsRepository: NorthWindBaseRepository
     {
 
         public List<Products> GetProducts(int? ProductID)

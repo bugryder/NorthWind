@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace NorthWind.Repository.NorthWind
 {
-    public class NorWindBaseRepository : baseRespository
+    public class NorthWindBaseRepository : baseRespository
     {
-        public NorWindBaseRepository()
+        public NorthWindBaseRepository()
         {
             String connectionString = ConfigurationManager.ConnectionStrings["NorthWind"].ConnectionString;
             baseCon = new SqlConnection(connectionString);
