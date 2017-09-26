@@ -78,6 +78,60 @@ namespace NorthWind.Repository
             return record;
         }
 
+
+        /// <summary>
+        /// 執行SQL語法
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="parameters"></param>
+        public T ExecuteScalar<T>(String sql, List<SqlParameter> parameters)
+        {
+
+            //取得連線
+            object result ;
+            if (baseCon.State == ConnectionState.Closed)
+            {
+                baseCon.Open();
+            }
+            try
+            {
+                SqlCommand cmdObject = new SqlCommand(sql, baseCon);
+                if (parameters != null)
+                {
+                    foreach (SqlParameter sp in parameters)
+                    {
+                        cmdObject.Parameters.Add(sp);
+                    }
+                }
+
+                result = cmdObject.ExecuteScalar();
+                //Log.WriteERPLog(sql);
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                Log.SqlError(ex, sql, "");
+                throw ex;
+
+
+            }
+            finally
+            {
+                if (baseCon.State == ConnectionState.Open)
+                {
+                    baseCon.Close();
+                }
+            }
+
+            return (result == null || result is DBNull) ? default(T) : (T)result;
+        }
+
+
+
+
         /// <summary>
         /// 取得DataTable
         /// </summary>

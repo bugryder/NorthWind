@@ -21,13 +21,13 @@ namespace NorthWind.Service
             return ProductsList;
         }
 
-        public Boolean AddProucts(Products Prouct)
+        public int AddProucts(Products Prouct)
         {
             //SupplierID ,CategoryID check
-            bool result = false;
+            int result = 0;
             if (Prouct != null)
             {
-                _northWindProductsRepository.AddProducts(Prouct);
+                result =  _northWindProductsRepository.AddProducts(Prouct);
             }
             return result;
         }
@@ -37,12 +37,9 @@ namespace NorthWind.Service
             bool result = false;
 
             //SupplierID ,CategoryID check
-
-            Products Products = _northWindProductsRepository.GetProducts(Prouct.ProductID).SingleOrDefault();
-
-            if (Products != null)
+            if (Prouct != null)
             {
-                _northWindProductsRepository.UpdateProducts(Prouct);
+                result = _northWindProductsRepository.UpdateProducts(Prouct) > 0;
             }
 
             return result;
@@ -56,7 +53,7 @@ namespace NorthWind.Service
 
             if (Products != null)
             {
-                _northWindProductsRepository.DeleteProducts(ProuctID);
+                result= _northWindProductsRepository.DeleteProducts(ProuctID) > 0;
 
             }
 

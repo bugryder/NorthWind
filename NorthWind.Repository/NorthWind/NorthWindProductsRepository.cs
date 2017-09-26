@@ -39,7 +39,7 @@ namespace NorthWind.Repository.NorthWind
             return pList;
         }
 
-        public void AddProducts(Products Product)
+        public int AddProducts(Products Product)
         {
 
             DataTable dt = new DataTable();
@@ -48,7 +48,8 @@ namespace NorthWind.Repository.NorthWind
             StringBuilder sql = new StringBuilder();
             sql.AppendLine(@"
                              insert Products( ProductName ,SupplierID ,CategoryID ,QuantityPerUnit ,UnitPrice ,UnitsInStock ,UnitsOnOrder ,ReorderLevel , Discontinued)
-                             values (@ProductName ,@SupplierID ,@CategoryID ,@QuantityPerUnit ,@UnitPrice ,@UnitsInStock ,@UnitsOnOrder ,@ReorderLevel , @Discontinued)
+                             values (@ProductName ,@SupplierID ,@CategoryID ,@QuantityPerUnit ,@UnitPrice ,@UnitsInStock ,@UnitsOnOrder ,@ReorderLevel , @Discontinued);
+                             SELECT CAST(scope_identity() AS int)
                             ");
 
             paramList.Add(SetParameterByIsNull("@ProductName", DbType.String, Product.ProductName));
@@ -62,11 +63,11 @@ namespace NorthWind.Repository.NorthWind
             paramList.Add(SetParameterByIsNull("@Discontinued", DbType.Boolean, Product.Discontinued));
 
             #endregion
-            ExecSQL(sql.ToString(), paramList);
+            return ExecuteScalar<int>(sql.ToString(), paramList);
 
         }
 
-        public void UpdateProducts(Products Product)
+        public int UpdateProducts(Products Product)
         {
             DataTable dt = new DataTable();
             List<SqlParameter> paramList = new List<SqlParameter>();
@@ -97,11 +98,11 @@ namespace NorthWind.Repository.NorthWind
             paramList.Add(SetParameterByIsNull("@Discontinued", DbType.Boolean, Product.Discontinued));
 
             #endregion
-            ExecSQL(sql.ToString(), paramList);
+            return ExecSQL(sql.ToString(), paramList);
 
         }
 
-        public void DeleteProducts(int? ProductID)
+        public int DeleteProducts(int? ProductID)
         {
             List<Products> pList = new List<Products>();
             DataTable dt = new DataTable();
@@ -113,7 +114,7 @@ namespace NorthWind.Repository.NorthWind
                             ");
             paramList.Add(SetParameterByIsNull("@ProductID", DbType.Int32, ProductID));
             #endregion
-            ExecSQL(sql.ToString(), paramList);
+            return ExecSQL(sql.ToString(), paramList);
 
         }
 
