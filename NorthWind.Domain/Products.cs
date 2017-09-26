@@ -8,7 +8,7 @@ namespace NorthWind.Domain
 {
     public class Products
     {
-        public int ProductID { get; set; }
+        public int? ProductID { get; set; }
 
         public string ProductName { get; set; }
 
@@ -26,7 +26,7 @@ namespace NorthWind.Domain
 
         public short? ReorderLevel { get; set; }
 
-        public bool Discontinued { get; set; }
+        public bool? Discontinued { get; set; }
 
     }
 

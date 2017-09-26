@@ -37,11 +37,102 @@ namespace NorthWind.Api.Controllers
             }
             catch (Exception e)
             {
+
+                _logger.Error(e.Message, e);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError , e.Message);
+
+            }
+
+        }
+
+        // POST: api/Products
+        public HttpResponseMessage Post([FromBody]Products Products)
+        {
+            _logger.DebugFormat("Invoking [{0}]", MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                var ProductID = _prouctsService.AddProucts(Products);
+                if (ProductID != 0)
+                {
+                    Products item = _prouctsService.GetProucts(ProductID).SingleOrDefault();
+                    return Request.CreateResponse(HttpStatusCode.OK, item);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Add Error");
+                }
+
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.Message, e);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+
+
+        public HttpResponseMessage Put([FromBody]Products Products)
+        {
+            _logger.DebugFormat("Invoking [{0}]", MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                Products item = _prouctsService.GetProucts(Products.ProductID).SingleOrDefault();
+                if (item == null)
+                {
+                    var message = string.Format("Product with id = {0} not found", Products.ProductID);
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
+                }
+                else
+                {
+                    if (_prouctsService.UpdateProucts(Products))
+                    {
+                        item = _prouctsService.GetProucts(Products.ProductID).SingleOrDefault();
+                        return Request.CreateResponse(HttpStatusCode.OK, item);
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Add Error");
+                    }
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e.Message, e);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError , e.Message);
+            }
+        }
+
+        // DELETE: api/Products/5
+        public HttpResponseMessage Delete(int id)
+        {
+            _logger.DebugFormat("Invoking [{0}]", MethodInfo.GetCurrentMethod().Name);
+            try
+            {
+                Products item = _prouctsService.GetProucts(id).SingleOrDefault();
+
+                if (item == null)
+                {
+                    var message = string.Format("Product with id = {0} not found", id);
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, message);
+                }
+                else
+                {
+                    _prouctsService.DeleteProucts(id);
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+
+
+            }
+            catch (Exception e)
+            {
                 _logger.Error(e.Message, e);
                 throw;
             }
 
         }
-
     }
 }
