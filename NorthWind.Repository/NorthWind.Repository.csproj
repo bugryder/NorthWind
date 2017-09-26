@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,7 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="baseRespository.cs" />
+    <Compile Include="NorthWind\NorthWindBaseRepository.cs" />
+    <Compile Include="NorthWind\NorthWindProductsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NorthWind.Domain\NorthWind.Domain.csproj">
+      <Project>{c8decf0a-b1c7-4b79-9d0f-a9cab3f40c68}</Project>
+      <Name>NorthWind.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NorthWind.Infrastructure\NorthWind.Infrastructure.csproj">
+      <Project>{87F1F69A-C821-434B-8B8C-4C564FCE094D}</Project>
+      <Name>NorthWind.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
